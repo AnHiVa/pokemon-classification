@@ -47,7 +47,9 @@ set.seed(7818)
 model_rf <- randomForest(status~., data = training, localImp = TRUE)
 pred_rf <- predict(model_rf, test)
 
-confusionMatrix(pred_rf, test$status)
+confusionMatrix(pred_rf, test$status) 
 
+## explain_forest(model_rf, interactions = TRUE, data = training) #Run for Forest Explanation
+ 
 #Random Forest is selected, sample error 2.94%
 
