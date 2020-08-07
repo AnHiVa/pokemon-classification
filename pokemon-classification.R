@@ -38,7 +38,7 @@ training %>%
 
 #Correlation Plot
 corrplot(cor(select(ungroup(training), -c(status))), 
-         method = "color", title = 'Stats Correlation Graph')
+         method = "color", tl.cex = 0.9)
 
 #decision tree
 set.seed(7818) #For reproducibility
