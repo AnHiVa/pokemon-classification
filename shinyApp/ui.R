@@ -1,23 +1,17 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
 
 library(shiny)
 
-# Define UI for application that draws a histogram
+
 shinyUI(fluidPage(
 
     # Application title
-    titlePanel("Pokémon Status Prediction"),
+    titlePanel(h1("Pokémon Group Prediction")),
 
-    # Sidebar with a slider input for number of bins
+    # Sidebar with a slider input for Pokémon stats
     sidebarLayout(
         sidebarPanel(
+            h2("Adjust stats to predict a Pokémon's group"),
+            em('Just move the sliders'),
             sliderInput("hp",
                         "HP base stat:",
                         min = 1,
@@ -56,9 +50,9 @@ shinyUI(fluidPage(
         ),
         
 
-        # Show a plot of the generated distribution
+        # Outputs group and image
         mainPanel(
-            h1('¿Normal, Sub Legendary, Mythical or Legendary?'),
+            h1('¿Normal, Sub Legendary, Mythical or Legendary Pokémon?'),
             h2(textOutput('status')),
             imageOutput('image1')
         )
