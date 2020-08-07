@@ -1,0 +1,76 @@
+---
+title: "Pokémon Classifier Pitch"
+subtitle: "Developing Data Products Project"
+author: "Andrés Hidalgo Vargas"
+date: "August 6th, 2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(caret)
+library(randomForest)
+library(knitr)
+
+df <- read_csv('pokedex_(Update_05.20).csv')
+
+# clean data for analisis 
+df_small <- df %>%
+  select(status,hp, attack,
+         defense, sp_attack, sp_defense,
+         speed,base_experience) %>%
+  mutate(status = as.factor(status)) %>%
+  group_by(status) %>%
+  mutate( base_experience = replace_na(base_experience, 20)) #Impute NA's the minimum base experience in Pokémon is 20
+```
+
+## Goal and dataset
+
+The Goal of the project is to classify a Pokémon in 
+
+- Normal
+- Sub Legendary
+- Mythical
+- Legendary
+
+Depending on a combination of stats.
+
+The dataset was downloaded from Mario Tormo Romero's [Kaggle page](https://www.kaggle.com/mariotormo/complete-pokemon-dataset-updated-090420) 
+
+[My github repo](https://github.com/AnHiVa/pokemon-classification)
+
+## Data Cleaning
+
+The required parameters are the Pokémon stats, and the `status` variable is the value we want to predict.
+
+```{r echo=TRUE}
+kable(head(df_small, 5))
+```
+
+## Data preparation
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(745) #For reproducibility 
+#Create training and testing sets
+dset <- createDataPartition(y = df_small$status, p = 0.7, list = FALSE)
+training <- df_small[dset, ]
+test <- df_small[-dset, ]
+```
+
+```{r echo=FALSE}
+#Check the count of our value of interest
+kable(training %>%
+  group_by(status) %>%
+  count(status), caption = 'Training set')
+```
+
+## Model fitting 
+
+```{r}
+set.seed(7818) # For reproducibility
+model_rf <- randomForest(status~., data = training, localImp = TRUE)
+pred_rf <- predict(model_rf, test)
+kable(confusionMatrix(pred_rf, test$status)$table)
+```
+
+*This accounts for a 97.05% accuracy in the model, 95% CI (0.9449, 0.9865)* [App](https://anhiva.shinyapps.io/pokemon-classifier/)
