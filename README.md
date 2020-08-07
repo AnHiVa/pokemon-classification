@@ -4,7 +4,7 @@ Done for the Data Products Coursera course.
 
 The dataset was downloaded from Mario Tormo Romero’s [Kaggle page](https://www.kaggle.com/mariotormo/complete-pokemon-dataset-updated-090420)
 
-[Shiny app](https://anhiva.shinyapps.io/pokemon-classifier/)
+Actual clasifier -> [Shiny app](https://anhiva.shinyapps.io/pokemon-classifier/) <- Give it a try
 
 [Coursera presentation](https://anhiva.github.io/pokemon-classification/#1)
 
